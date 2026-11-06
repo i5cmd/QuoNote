@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "QuoNote (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "QuoNote (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
