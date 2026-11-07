@@ -18,24 +18,33 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Grid ColumnSpacing="5" Margin="10">
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid ColumnSpacing="5" Margin="10" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <AutoSuggestBox Grid.Column="0" Width="200" PlaceholderText="Search..."/>
+                <AutoSuggestBox Grid.Column="0" Width="200" Name="SearchingBox" PlaceholderText="Search..." TextChanged="SearchingBox_TextChanged"/>
                 <Button Grid.Column="1" Width="32" Height="32" Padding="0" Name="AddProject" Click="AddProject_Click">
                     <FontIcon Glyph="&#xE710;" FontSize="10"/>
                 </Button>
             </Grid>
-            <ListView Margin="10" ItemsSource="{x:Bind Notes}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Note">
-                        <TextBlock Name="Title" Text="{x:Bind Title}"></TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+            <Grid Grid.Row="1">
+                <ListView Margin="10" ItemsSource="{x:Bind Notes}" Name="NotesList" PointerPressed="NotesList_PointerPressed" SelectionChanged="NotesList_SelectionChanged" ScrollViewer.VerticalScrollMode="Enabled"  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Note">
+                            <TextBlock Name="Title" Text="{x:Bind Title}"></TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <TextBlock Name="TitleOfChosen"></TextBlock>
+        </Grid>
     </Grid>
 </Window>
