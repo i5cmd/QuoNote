@@ -43,13 +43,13 @@
                 </ListView>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Name="ContentGroup" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Name="TitleOfChosen" FontSize="32" FontWeight="Black" TextAlignment="Center" Margin="6" Grid.Row="0"></TextBlock>
-            <TextBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="TextBox_TextChanged"></TextBox>
+            <RichEditBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="ContentBox_TextChanged"></RichEditBox>
         </Grid>
     </Grid>
 </Window>

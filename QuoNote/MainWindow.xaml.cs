@@ -16,6 +16,7 @@ using Windows.Foundation.Collections;
 using QuoNote;
 using System.Threading.Tasks;
 using Microsoft.UI.Input;
+using Windows.Storage.Streams;
 
 namespace QuoNote
 {
@@ -102,8 +103,21 @@ namespace QuoNote
 
                 deleteFlyoutItem.Click += async (sender, args) =>
                 {
-                    await _dataManagement.RemoveNoteAsync(((Note)dataContext).Id);
-                    await LoadNotesAsync();
+                    ContentDialog dialog = new();
+                    dialog.Title = "Are you sure?";
+                    dialog.Content = $"Do you want to remove {note.Title}?";
+                    dialog.PrimaryButtonText = "Yes";
+                    dialog.SecondaryButtonText = "Cancel";
+                    dialog.XamlRoot = this.Content.XamlRoot;
+
+                    ContentDialogResult result = await dialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        ContentGroup.Visibility = Visibility.Collapsed;
+                        await _dataManagement.RemoveNoteAsync(((Note)dataContext).Id);
+                        await LoadNotesAsync();
+                    }
                 };
                 nameFlyoutItem.Click += async (sender, args) =>
                 {
@@ -130,6 +144,7 @@ namespace QuoNote
                         {
                             return;
                         }
+                        ContentGroup.Visibility = Visibility.Collapsed;
                         note.Title = tx.Text;
                         await _dataManagement.UpdateNoteAsync(note);
                         await LoadNotesAsync();
@@ -143,12 +158,20 @@ namespace QuoNote
             }
         }
 
-        private void NotesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void NotesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (NotesList.SelectedItem is Note selectedNote)
             {
+                using IRandomAccessStream stream = new InMemoryRandomAccessStream();
+                using StreamWriter writer = new(stream.AsStreamForWrite());
+                await writer.WriteAsync(selectedNote.MarkdownContent);
+                await writer.FlushAsync();
+                stream.Seek(0);
+
+                ContentGroup.Visibility = Visibility.Visible;
                 TitleOfChosen.Text = selectedNote.Title;
-                ContentBox.Text = selectedNote.MarkdownContent;
+
+                ContentBox.Document.LoadFromStream(Microsoft.UI.Text.TextSetOptions.FormatRtf, stream);
             }
         }
 
@@ -167,11 +190,24 @@ namespace QuoNote
             }
         }
 
-        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ContentBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var properties = e.GetCurrentPoint((UIElement)sender).Properties;
+            if (properties.IsLeftButtonPressed)
+            {
+                ContentBox.Visibility = Visibility.Visible;
+            }
+        }
+
+        private async void ContentBox_TextChanged(object sender, RoutedEventArgs e)
         {
             if (NotesList.SelectedItem is Note selectedNote)
             {
-                selectedNote.MarkdownContent = ContentBox.Text;
+                using IRandomAccessStream stream = new InMemoryRandomAccessStream();
+                ContentBox.Document.SaveToStream(Microsoft.UI.Text.TextGetOptions.FormatRtf, stream);
+                stream.Seek(0);
+                using StreamReader reader = new(stream.AsStreamForRead());
+                selectedNote.MarkdownContent = await reader.ReadToEndAsync();
                 await _dataManagement.UpdateNoteAsync(selectedNote);
             }
         }
