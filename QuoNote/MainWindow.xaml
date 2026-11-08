@@ -37,7 +37,10 @@
                 <ListView Margin="10" ItemsSource="{x:Bind Notes}" Name="NotesList" PointerPressed="NotesList_PointerPressed" SelectionChanged="NotesList_SelectionChanged" ScrollViewer.VerticalScrollMode="Enabled"  ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Note">
-                            <TextBlock Name="Title" Text="{x:Bind Title}"></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE718;" FontSize="10" Visibility="{x:Bind Pinned}" Margin="0 0 5 0"/>
+                                <TextBlock Name="Title" Text="{x:Bind Title}"></TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -48,7 +51,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Name="TitleOfChosen" FontSize="32" FontWeight="Black" TextAlignment="Center" Margin="6" Grid.Row="0"></TextBlock>
+            <TextBlock Name="TitleOfChosen" FontSize="32" FontWeight="Black" TextAlignment="Left" Margin="6" Grid.Row="0"></TextBlock>
             <RichEditBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="ContentBox_TextChanged"></RichEditBox>
         </Grid>
     </Grid>
