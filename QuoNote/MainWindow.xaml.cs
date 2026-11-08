@@ -148,6 +148,7 @@ namespace QuoNote
             if (NotesList.SelectedItem is Note selectedNote)
             {
                 TitleOfChosen.Text = selectedNote.Title;
+                ContentBox.Text = selectedNote.MarkdownContent;
             }
         }
 
@@ -163,6 +164,15 @@ namespace QuoNote
                     Notes.Where(n => n.Title.Contains(SearchingBox.Text, StringComparison.OrdinalIgnoreCase))
                 );
                 NotesList.ItemsSource = filteredN;
+            }
+        }
+
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (NotesList.SelectedItem is Note selectedNote)
+            {
+                selectedNote.MarkdownContent = ContentBox.Text;
+                await _dataManagement.UpdateNoteAsync(selectedNote);
             }
         }
     }
