@@ -20,6 +20,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
 using Windows.UI;
+using static System.Collections.Specialized.BitVector32;
 
 namespace QuoNote
 {
@@ -290,6 +291,39 @@ namespace QuoNote
             }
 
             range.CharacterFormat.BackgroundColor = hasHL ? Colors.Transparent : Colors.Gray;
+        }
+
+        private void IncrFont_Click(object sender, RoutedEventArgs e)
+        {
+            var doc = ContentBox.Document;
+            var sel = doc.Selection;
+
+            for (int i = sel.StartPosition; i < sel.EndPosition; i++)
+            {
+                var r = doc.GetRange(i, i + 1);
+                r.CharacterFormat.Size += 1;
+            }
+            FlyoutBase.ShowAt(ContentBox);
+        }
+
+        private void ReduFont_Click(object sender, RoutedEventArgs e)
+        {
+            var doc = ContentBox.Document;
+            var sel = doc.Selection;
+
+            for (int i = sel.StartPosition; i < sel.EndPosition; i++)
+            {
+                var r = doc.GetRange(i, i + 1);
+                r.CharacterFormat.Size -= 1;
+            }
+            FlyoutBase.ShowAt(ContentBox);
+        }
+
+        private void SetFont14_Click(object sender, RoutedEventArgs e)
+        {
+            var format = ContentBox.Document.Selection.CharacterFormat;
+
+            format.Size = 10.5f;
         }
     }
 }

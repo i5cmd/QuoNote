@@ -54,7 +54,7 @@
             <TextBlock Name="TitleOfChosen" FontSize="32" FontWeight="Black" TextAlignment="Left" Margin="6" Grid.Row="0"></TextBlock>
             <RichEditBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="ContentBox_TextChanged">
                 <RichEditBox.SelectionFlyout>
-                    <CommandBarFlyout>
+                    <CommandBarFlyout x:Name="FlyoutBase" Placement="Bottom">
                         <CommandBarFlyout.PrimaryCommands>
                             <AppBarButton Icon="Bold" Label="Bold" Name="Bold_Text" Click="Bold_Text_Click"></AppBarButton>
                             <AppBarButton Icon="Italic" Label="Italic" Name="Italic_Text" Click="Italic_Text_Click"></AppBarButton>
@@ -62,6 +62,18 @@
                             <AppBarButton Icon="Highlight" Label="Highlight" Name="Highlight_Text" Click="Highlight_Text_Click"></AppBarButton>
                         </CommandBarFlyout.PrimaryCommands>
                         <CommandBarFlyout.SecondaryCommands>
+                            <AppBarButton Label="Increase font" Name="IncrFont" Icon="Up" Click="IncrFont_Click"></AppBarButton>
+                            <AppBarButton Label="Reduce font" Name="ReduFont" Click="ReduFont_Click">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE74B;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton Label="Set font to 14" Name="SetFont14" Click="SetFont14_Click">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE94E;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarSeparator></AppBarSeparator>
                             <AppBarButton Label="Copy" Icon="Copy" Name="Copy_Text" Click="Copy_Text_Click"></AppBarButton>
                             <AppBarButton Label="Cut" Icon="Cut" Name="Cut_Text" Click="Cut_Text_Click"></AppBarButton>
                             <AppBarButton Label="Paste" Icon="Paste" Name="Paste_Text" Click="Paste_Text_Click"></AppBarButton>
@@ -70,13 +82,26 @@
                     </CommandBarFlyout>
                 </RichEditBox.SelectionFlyout>
                 <RichEditBox.ContextFlyout>
-                    <CommandBarFlyout>
+                    <CommandBarFlyout Placement="BottomEdgeAlignedLeft" AlwaysExpanded="True">
                         <CommandBarFlyout.PrimaryCommands>
                             <AppBarButton Icon="Bold" Label="Bold" Click="Bold_Text_Click"/>
                             <AppBarButton Icon="Italic" Label="Italic" Click="Italic_Text_Click"/>
                             <AppBarButton Icon="Underline" Label="Underline" Click="Underline_Text_Click"/>
+                            <AppBarButton Icon="Highlight" Label="Highlight" Click="Highlight_Text_Click"></AppBarButton>
                         </CommandBarFlyout.PrimaryCommands>
                         <CommandBarFlyout.SecondaryCommands>
+                            <AppBarButton Label="Increase font" Icon="Up" Click="IncrFont_Click"></AppBarButton>
+                            <AppBarButton Label="Reduce font" Click="ReduFont_Click">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE74B;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton Label="Set font to 10.5pt" Click="SetFont14_Click">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE94E;"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarSeparator></AppBarSeparator>
                             <AppBarButton Label="Copy" Icon="Copy" Click="Copy_Text_Click"/>
                             <AppBarButton Label="Cut" Icon="Cut" Click="Cut_Text_Click"></AppBarButton>
                             <AppBarButton Label="Paste" Icon="Paste" Click="Paste_Text_Click"/>
