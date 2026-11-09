@@ -52,7 +52,39 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Name="TitleOfChosen" FontSize="32" FontWeight="Black" TextAlignment="Left" Margin="6" Grid.Row="0"></TextBlock>
-            <RichEditBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="ContentBox_TextChanged"></RichEditBox>
+            <RichEditBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" IsSpellCheckEnabled="True" Margin="6" Name="ContentBox" TextChanged="ContentBox_TextChanged">
+                <RichEditBox.SelectionFlyout>
+                    <CommandBarFlyout>
+                        <CommandBarFlyout.PrimaryCommands>
+                            <AppBarButton Icon="Bold" Label="Bold" Name="Bold_Text" Click="Bold_Text_Click"></AppBarButton>
+                            <AppBarButton Icon="Italic" Label="Italic" Name="Italic_Text" Click="Italic_Text_Click"></AppBarButton>
+                            <AppBarButton Icon="Underline" Label="Underline" Name="Underline_Text" Click="Underline_Text_Click"></AppBarButton>
+                            <AppBarButton Icon="Highlight" Label="Highlight" Name="Highlight_Text" Click="Highlight_Text_Click"></AppBarButton>
+                        </CommandBarFlyout.PrimaryCommands>
+                        <CommandBarFlyout.SecondaryCommands>
+                            <AppBarButton Label="Copy" Icon="Copy" Name="Copy_Text" Click="Copy_Text_Click"></AppBarButton>
+                            <AppBarButton Label="Cut" Icon="Cut" Name="Cut_Text" Click="Cut_Text_Click"></AppBarButton>
+                            <AppBarButton Label="Paste" Icon="Paste" Name="Paste_Text" Click="Paste_Text_Click"></AppBarButton>
+                            <AppBarButton Label="Select all" Icon="SelectAll" Name="Select_All" Click="Select_All_Click"></AppBarButton>
+                        </CommandBarFlyout.SecondaryCommands>
+                    </CommandBarFlyout>
+                </RichEditBox.SelectionFlyout>
+                <RichEditBox.ContextFlyout>
+                    <CommandBarFlyout>
+                        <CommandBarFlyout.PrimaryCommands>
+                            <AppBarButton Icon="Bold" Label="Bold" Click="Bold_Text_Click"/>
+                            <AppBarButton Icon="Italic" Label="Italic" Click="Italic_Text_Click"/>
+                            <AppBarButton Icon="Underline" Label="Underline" Click="Underline_Text_Click"/>
+                        </CommandBarFlyout.PrimaryCommands>
+                        <CommandBarFlyout.SecondaryCommands>
+                            <AppBarButton Label="Copy" Icon="Copy" Click="Copy_Text_Click"/>
+                            <AppBarButton Label="Cut" Icon="Cut" Click="Cut_Text_Click"></AppBarButton>
+                            <AppBarButton Label="Paste" Icon="Paste" Click="Paste_Text_Click"/>
+                            <AppBarButton Label="Select all" Icon="SelectAll" Click="Select_All_Click"/>
+                        </CommandBarFlyout.SecondaryCommands>
+                    </CommandBarFlyout>
+                </RichEditBox.ContextFlyout>
+            </RichEditBox>
         </Grid>
     </Grid>
 </Window>
